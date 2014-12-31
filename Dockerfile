@@ -11,16 +11,25 @@ RUN apt-get update -q && apt-get upgrade -q \
     zlib1g-dev \
     python-lxml \
     ttf-dejavu \
-    poppler-utils
+    poppler-utils \
+    xsltproc \
+    xmlstarlet \
+    openssl \
+    SOAPpy \
+    pyopenssl \
+    suds \
+    pillow \
+    qrcode \
+    xmltodict \
+    M2Crypto 
 RUN ln -s /usr/include/freetype2 /usr/local/include/freetype \
     && ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib/ \
     && ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib/ \
     && ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib/
-RUN pip install pyopenssl
 RUN cd /tmp && git clone --depth=1 https://github.com/thewtex/sphinx-contrib.git \
     && cd sphinx-contrib/youtube && python setup.py install
 
-RUN pip install pyyaml && pip install xmltodict && cd /tmp \
+RUN pip install pyyaml && cd /tmp \
     && wget https://raw.githubusercontent.com/ruiztulio/gist-vauxoo/master/travis_run.py \
     && python travis_run.py
 RUN cd /tmp \
