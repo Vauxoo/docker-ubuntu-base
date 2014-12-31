@@ -1,38 +1,28 @@
-FROM vauxoo/docker-ubuntu-base
+FROM ubuntu:14.04
 MAINTAINER Tulio Ruiz <tulio@vauxoo.com>
+RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf \
+    && echo 'APT::Get::force-yes "true";' >> /etc/apt/apt.conf
+RUN locale-gen fr_FR \
+    && locale-gen en_US.UTF-8 \
+    && dpkg-reconfigure locales \
+    && update-locale LANG=en_US.UTF-8 \
+    && update-locale LC_ALL=en_US.UTF-8
+ENV PYTHONIOENCODING utf-8
 RUN apt-get update -q && apt-get upgrade -q \
-    && apt-get install --allow-unauthenticated -q libssl-dev \
-    libyaml-dev \
-    libjpeg-dev \
-    libgeoip-dev \
-    libffi-dev \
-    libqrencode-dev \
-    libfreetype6-dev \
-    zlib1g-dev \
-    python-lxml \
-    ttf-dejavu \
-    poppler-utils \
-    xsltproc \
-    xmlstarlet \
-    openssl \
-    SOAPpy \
-    pyopenssl \
-    suds \
-    pillow \
-    qrcode \
-    xmltodict \
-    M2Crypto 
-RUN ln -s /usr/include/freetype2 /usr/local/include/freetype \
-    && ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib/ \
-    && ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib/ \
-    && ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib/
-RUN cd /tmp && git clone --depth=1 https://github.com/thewtex/sphinx-contrib.git \
-    && cd sphinx-contrib/youtube && python setup.py install
-
-RUN pip install pyyaml && cd /tmp \
-    && wget https://raw.githubusercontent.com/ruiztulio/gist-vauxoo/master/travis_run.py \
-    && python travis_run.py
-RUN cd /tmp \
-    && wget https://raw.githubusercontent.com/Vauxoo/odoo-network/8.0/addons/network/scripts/odoo-server/05-install-dependencies-python-v80.sh \
-    && sh 05-install-dependencies-python-v80.sh
+    && apt-get install --allow-unauthenticated -q bzr \
+    python \
+    python-dev \
+    python-psycopg2 \
+    python-setuptools \
+    git \
+    vim \
+    wget \
+    supervisor \
+    openssh-client \
+    tmux \
+    lsof \
+    w3m \
+    multitail
+RUN cd /tmp && wget -q https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py && python get-pip.py
+RUN pip install PyGithub && pip install redis
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
