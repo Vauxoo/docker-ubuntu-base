@@ -1,4 +1,4 @@
-docker-base-image-80
+docker-ubuntu-vauxoo
 ====================
 
-This is a Dockerfile created for Odoo 8.0, the main idea is that it can be optimized just for running Odoo 8.0 with minimal dependencies
+This image contains the main packages used in Vauxoo (www.vauxoo.com) for building any servide using Docker (www.docker.com)
