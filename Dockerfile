@@ -7,6 +7,8 @@ RUN locale-gen fr_FR \
     && dpkg-reconfigure locales \
     && update-locale LANG=en_US.UTF-8 \
     && update-locale LC_ALL=en_US.UTF-8
+RUN ln -s /usr/share/i18n/SUPPORTED /var/lib/locales/supported.d/all \
+    && locale-gen
 ENV PYTHONIOENCODING utf-8
 RUN apt-get update -q && apt-get upgrade -q \
     && apt-get install --allow-unauthenticated -q bzr \
