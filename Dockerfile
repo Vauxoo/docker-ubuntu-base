@@ -10,6 +10,7 @@ RUN locale-gen fr_FR \
 RUN ln -s /usr/share/i18n/SUPPORTED /var/lib/locales/supported.d/all \
     && locale-gen
 ENV PYTHONIOENCODING utf-8
+ENV TERM xterm
 RUN apt-get update -q && apt-get upgrade -q \
     && apt-get install --allow-unauthenticated -q bzr \
     python \
