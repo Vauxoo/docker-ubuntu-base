@@ -27,7 +27,8 @@ RUN apt-get update -q && apt-get upgrade -q \
     w3m \
     multitail \
     postgresql-client \
-    locate
+    locate \
+    unzip
 RUN cd /tmp && wget -q https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py && python get-pip.py
 RUN pip install PyGithub && pip install redis
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
