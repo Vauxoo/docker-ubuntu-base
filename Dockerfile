@@ -20,6 +20,7 @@ RUN apt-get update -q && apt-get upgrade -q \
     git \
     vim \
     wget \
+    curl \
     supervisor \
     openssh-client \
     tmux \
