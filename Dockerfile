@@ -34,7 +34,8 @@ RUN apt-get update -q && apt-get upgrade -q \
     libsasl2-dev \
     openssl \
     libffi-dev \
-    libssl-dev
+    libssl-dev \
+    vim-nox
 RUN cd /tmp && wget -q https://bootstrap.pypa.io/get-pip.py && python get-pip.py
 RUN pip install --upgrade pyopenssl ndg-httpsclient pyasn1
 RUN pip install PyGithub
