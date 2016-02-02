@@ -37,5 +37,5 @@ RUN apt-get update -q && apt-get upgrade -q \
     libssl-dev
 RUN cd /tmp && wget -q https://bootstrap.pypa.io/get-pip.py && python get-pip.py
 RUN pip install --upgrade pyopenssl ndg-httpsclient pyasn1
-RUN pip install PyGithub redis
+RUN pip install PyGithub
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
