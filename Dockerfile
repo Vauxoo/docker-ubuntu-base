@@ -29,7 +29,13 @@ RUN apt-get update -q && apt-get upgrade -q \
     multitail \
     postgresql-client \
     locate \
-    unzip
-RUN cd /tmp && wget -q https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py && python get-pip.py
-RUN pip install PyGithub && pip install redis
+    unzip \
+    htop \
+    libsasl2-dev \
+    openssl \
+    libffi-dev \
+    libssl-dev
+RUN cd /tmp && wget -q https://bootstrap.pypa.io/get-pip.py && python get-pip.py
+RUN pip install --upgrade pyopenssl ndg-httpsclient pyasn1
+RUN pip install PyGithub redis
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
