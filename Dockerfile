@@ -10,6 +10,8 @@ RUN locale-gen fr_FR \
 RUN ln -s /usr/share/i18n/SUPPORTED /var/lib/locales/supported.d/all \
     && locale-gen
 ENV PYTHONIOENCODING utf-8
+ENV LANG C.UTF-8
+RUN echo 'LANG="en_US.UTF-8"' > /etc/default/locale
 ENV TERM xterm
 RUN apt-get update -q && apt-get upgrade -q \
     && apt-get install --allow-unauthenticated -q bzr \
