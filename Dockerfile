@@ -8,39 +8,41 @@ RUN locale-gen fr_FR \
     && ln -s /usr/share/i18n/SUPPORTED /var/lib/locales/supported.d/all \
     && locale-gen \
     && echo 'LANG="en_US.UTF-8"' > /etc/default/locale
-ENV PYTHONIOENCODING utf-8
-ENV LANG C.UTF-8
-ENV TERM xterm
+
+ENV PYTHONIOENCODING="utf-8" \
+    LANG="C.UTF-8" \
+    TERM="xterm"
 RUN apt-get update -q && apt-get install -qy wget \
     && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - \
     && echo 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' > /etc/apt/sources.list.d/pgdg.list \
     && echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf \
     && echo 'APT::Get::force-yes "true";' >> /etc/apt/apt.conf \
     && apt-get update -q && apt-get upgrade -q \
-    && apt-get install --allow-unauthenticated -q bzr \
+    && apt-get install --allow-unauthenticated -q \
+    bzr \
+    curl \
+    git \
+    htop \
+    libffi-dev \
+    libsasl2-dev \
+    libssl-dev \
+    locate \
+    lsof \
+    multitail \
+    openssl \
+    openssh-client \
+    postgresql-client \
     python \
     python-dev \
     python-psycopg2 \
     python-setuptools \
-    git \
-    vim \
-    wget \
-    curl \
     supervisor \
-    openssh-client \
     tmux \
-    lsof \
-    w3m \
-    multitail \
-    postgresql-client \
-    locate \
     unzip \
-    htop \
-    libsasl2-dev \
-    openssl \
-    libffi-dev \
-    libssl-dev \
-    vim-nox
+    vim \
+    vim-nox \
+    w3m \
+    wget
 RUN cd /tmp \
     && wget -q https://bootstrap.pypa.io/get-pip.py \
     && python get-pip.py \
