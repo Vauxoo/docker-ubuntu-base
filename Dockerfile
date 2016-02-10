@@ -23,6 +23,7 @@ RUN apt-get update -q && apt-get install -qy wget \
     git \
     htop \
     libffi-dev \
+    libpq-dev \
     libsasl2-dev \
     libssl-dev \
     locate \
@@ -31,6 +32,7 @@ RUN apt-get update -q && apt-get install -qy wget \
     openssl \
     openssh-client \
     postgresql-client \
+    postgresql-common \
     python \
     python-dev \
     python-psycopg2 \
