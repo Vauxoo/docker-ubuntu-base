@@ -1,5 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER Tulio Ruiz <tulio@vauxoo.com>
+
 RUN locale-gen fr_FR \
     && locale-gen en_US.UTF-8 \
     && dpkg-reconfigure locales \
@@ -8,9 +9,11 @@ RUN locale-gen fr_FR \
     && ln -s /usr/share/i18n/SUPPORTED /var/lib/locales/supported.d/all \
     && locale-gen \
     && echo 'LANG="en_US.UTF-8"' > /etc/default/locale
+
 ENV PYTHONIOENCODING="utf-8" \
     LANG="C.UTF-8" \
     TERM="xterm"
+
 RUN apt-get update -q && apt-get install -qy wget \
     && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - \
     && echo 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' > /etc/apt/sources.list.d/pgdg.list \
@@ -48,7 +51,7 @@ RUN apt-get update -q && apt-get install -qy wget \
     && wget -q https://bootstrap.pypa.io/get-pip.py \
     && python get-pip.py \
     && pip install --upgrade pyopenssl ndg-httpsclient pyasn1 \
-    && pip install PyGithub \
+    && pip install PyGithub click \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/*
