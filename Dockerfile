@@ -11,7 +11,10 @@ RUN locale-gen fr_FR \
 ENV PYTHONIOENCODING utf-8
 ENV LANG C.UTF-8
 ENV TERM xterm
-RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf \
+RUN apt-get update -q && apt-get install -qy wget \
+    && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - \
+    && echo 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' > /etc/apt/sources.list.d/pgdg.list \
+    && echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf \
     && echo 'APT::Get::force-yes "true";' >> /etc/apt/apt.conf \
     && apt-get update -q && apt-get upgrade -q \
     && apt-get install --allow-unauthenticated -q bzr \
