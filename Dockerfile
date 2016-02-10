@@ -8,7 +8,6 @@ RUN locale-gen fr_FR \
     && ln -s /usr/share/i18n/SUPPORTED /var/lib/locales/supported.d/all \
     && locale-gen \
     && echo 'LANG="en_US.UTF-8"' > /etc/default/locale
-
 ENV PYTHONIOENCODING="utf-8" \
     LANG="C.UTF-8" \
     TERM="xterm"
@@ -42,12 +41,12 @@ RUN apt-get update -q && apt-get install -qy wget \
     vim \
     vim-nox \
     w3m \
-    wget
-RUN cd /tmp \
+    wget \
+    && cd /tmp \
     && wget -q https://bootstrap.pypa.io/get-pip.py \
     && python get-pip.py \
     && pip install --upgrade pyopenssl ndg-httpsclient pyasn1 \
-    && pip install PyGithub
-RUN apt-get clean \
+    && pip install PyGithub \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/*
