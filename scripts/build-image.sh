@@ -1,84 +1,104 @@
 #!/usr/bin/env sh
 
-# Where's my apt?
-APTGET="$( which apt-get )"
+# With a little help from my friends
+. /usr/share/vx-docker-internal/ubuntu-base/library.sh
 
-# I'm not here, i won't interact with you
-APTGETCMD="env DEBIAN_FRONTEND=noninteractive ${APTGET}"
+# Let's set some defaults here
+PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
+PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+TRUSTY_REPO="deb http://archive.ubuntu.com/ubuntu/ trusty main universe multiverse"
+TRUSTY_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ trusty-updates main universe multiverse"
+TRUSTY_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ trusty-security main universe multiverse"
+DPKG_DEPENDS="bzr \
+              git \
+              mercurial \
+              bash-completion \
+              apt-transport-https \
+              curl \
+              wget \
+              htop \
+              locate \
+              lsof \
+              multitail \
+              supervisor \
+              tmux \
+              unzip \
+              vim \
+              vim-nox \
+              w3m \
+              openssl \
+              openssh-client \
+              postgresql-client \
+              postgresql-common \
+              python \
+              python-setuptools"
+DPKG_UNNECESSARY="libpython3.4 \
+                  libpython3.4-minimal"
+PIP_OPTS="--upgrade \
+          --no-cache-dir"
+PIP_DEPENDS="pyopenssl \
+             psycopg2 \
+             ndg-httpsclient \
+             pyasn1 \
+             PyGithub \
+             merge-requirements \
+             pip-tools \
+             click"
+PIP_DPKG_BUILD_DEPENDS="libpq-dev \
+                        python-dev \
+                        libffi-dev \
+                        gcc"
 
-# Let's tell apt to not install recommendations,
-# assume always a positive answer, and allow unauthenticated repos
-# Dpkg: you need to install configurations always. Ah, and be quiet.
-APTGETOPTS="-qq \
-            -o Apt::Install-Recommends=false \
-            -o Apt::Get::Assume-Yes=true \
-            -o Apt::Get::AllowUnauthenticated=true \
-            -o DPkg::Options::=--force-confmiss \
-            -o DPkg::Options::=--force-confnew \
-            -o DPkg::Options::=--force-overwrite \
-            -o DPkg::Options::=--force-unsafe-io"
-
-# List of software we need
-DPKGDEPENDS="bzr \
-             curl \
-             git \
-             htop \
-             locate \
-             lsof \
-             multitail \
-             openssl \
-             openssh-client \
-             postgresql-client \
-             postgresql-common \
-             python \
-             python-psycopg2 \
-             python-setuptools \
-             python-pip \
-             python-openssl \
-             python-ndg-httpsclient \
-             python-asn1 \
-             python-github \
-             python-click \
-             supervisor \
-             tmux \
-             unzip \
-             vim \
-             vim-nox \
-             w3m \
-             wget"
-
-# Blazing fast dpkg
+# Dpkg, please always install configurations from upstream, be fast
+# and no questions asked.
 {
-	echo 'force-unsafe-io'
-} | sudo tee etc/dpkg/dpkg.cfg.d/speedup > /dev/null
+    echo 'force-confmiss'
+    echo 'force-confnew'
+    echo 'force-overwrite'
+    echo 'force-unsafe-io'
+} | tee /etc/dpkg/dpkg.cfg.d/100-vauxoo-dpkg > /dev/null
 
-# Don't give me translations man, i can tok inglis
+# Apt, don't give me translations, assume always a positive answer,
+# don't fill my image with recommended stuff i didn't told you to install,
+# be permissive with packages without visa.
 {
-	echo 'Acquire::Languages "none";'
-} | sudo tee etc/apt/apt.conf.d/no-languages > /dev/null
+    echo 'Acquire::Languages "none";'
+    echo 'Apt::Get::Assume-Yes "true";'
+    echo 'Apt::Install-Recommends "false";'
+    echo 'Apt::Get::AllowUnauthenticated "true";'
+    echo 'Dpkg::Post-Invoke { "/usr/share/vx-docker-internal/ubuntu-base/clean-image.sh"; }; '
+} | tee /etc/apt/apt.conf.d/100-vauxoo-apt > /dev/null
 
 # This will setup our default locale.
 # Setting these three variables will ensure we have a proper locale environment
-# avoiding the use of PYTHONIOENCODING (See http://stackoverflow.com/a/34378962)
-locale-gen en_US.UTF-8
-update-locale LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8
+locale-gen ${LANG}
+update-locale LANG=${LANG} LANGUAGE=${LANG} LC_ALL=${LANG}
 
-# Setting this according to vauxoo/docker-ubuntu-base#4
-export TERM="xterm"
+# Configure apt sources so we can use multiverse section from repo
+conf_aptsources "${TRUSTY_REPO}" "${TRUSTY_UPDATES_REPO}" "${TRUSTY_SECURITY_REPO}"
+
+# This will put postgres's upstream repo for us to install a newer
+# postgres because our image is so old
+add_custom_aptsource "${PSQL_UPSTREAM_REPO}" "${PSQL_UPSTREAM_KEY}"
 
 # Release the apt monster!
-${APTGETCMD} ${APTGETOPTS} update
-${APTGETCMD} ${APTGETOPTS} upgrade
-${APTGETCMD} ${APTGETOPTS} install ${DPKGDEPENDS}
+apt-get update
+apt-get upgrade
+apt-get install ${DPKG_DEPENDS} ${PIP_DPKG_BUILD_DEPENDS}
 
-# Remove unnecessary files, we don't need you
-find usr -name "*.pyc" -print0 | xargs -0r sudo rm -rfv
-find var/cache/apt -type f -print0 | xargs -0r sudo rm -rfv
-find var/lib/apt/lists -type f -print0 | xargs -0r sudo rm -rfv
-find usr/share/man -type f -print0 | xargs -0r sudo rm -rfv
-find usr/share/doc -type f -print0 | xargs -0r sudo rm -rfv
-find usr/share/locale -type f -print0 | xargs -0r sudo rm -rfv
-find var/log -type f -print0 | xargs -0r sudo rm -rfv
-find var/tmp -type f -print0 | xargs -0r sudo rm -rfv
-find tmp -type f -print0 | xargs -0r sudo rm -rfv
+# Get pip from upstream because is lighter
+py_download_execute https://bootstrap.pypa.io/get-pip.py
+
+# Install python dependencies
+pip install ${PIP_OPTS} ${PIP_DEPENDS}
+
+# Remove build depends for pip and unnecessary packages
+apt-get purge ${PIP_DPKG_BUILD_DEPENDS} ${DPKG_UNNECESSARY}
+apt-get autoremove
+
+# Final cleaning
+find /tmp -type f -print0 | xargs -0r rm -rf
+find /var/tmp -type f -print0 | xargs -0r rm -rf
+find /var/log -type f -print0 | xargs -0r rm -rf
+find /var/lib/apt/lists -type f -print0 | xargs -0r rm -rf
+find /usr/local/lib/python2.7/dist-packages/github/tests -type f -print0 | xargs -0r rm -rf

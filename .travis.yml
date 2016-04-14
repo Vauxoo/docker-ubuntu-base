@@ -1,0 +1,19 @@
+sudo: required
+services:
+  - docker
+
+install:
+  - npm install -g dockerlint
+
+# TODO: Check git diff changes to build just required image.
+script:
+  - for dfile in `find $TRAVIS_BUILD_DIR -name 'Dockerfile' -not -path "./.git/*"`; do echo " ===== [ CHECKING $dfile ] ===== "; dockerlint $dfile; if [ $? -ne 0 ]; then echo " ----- [ FINISHED IN ERROR ] ----- "; fi; echo ""; done
+  - git clone https://github.com/vauxoo-dev/docker-odoo-image.git -b master-102-ref-shrink-image-dev-luisalejandro ${TRAVIS_BUILD_DIR}/docker-odoo-image
+  - docker build --rm -t vauxoo/docker-ubuntu-base:latest ${TRAVIS_BUILD_DIR}/docker-ubuntu-base
+  - docker build --rm -t vauxoo/odoo-80-image:latest ${TRAVIS_BUILD_DIR}/docker-odoo-image/odoo80
+  - docker build --rm -t vauxoo/odoo-80-image-shippable.auto:latest ${TRAVIS_BUILD_DIR}/docker-odoo-image/odoo-shippable
+  - 
+
+# TODO: Add docker push
+after_success:
+    - du -hs /*
