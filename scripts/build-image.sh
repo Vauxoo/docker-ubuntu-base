@@ -71,7 +71,7 @@ PIP_DPKG_BUILD_DEPENDS="libpq-dev \
 
 # This will setup our default locale.
 # Setting these three variables will ensure we have a proper locale environment
-locale-gen ${LANG}
+locale-gen
 update-locale LANG=${LANG} LANGUAGE=${LANG} LC_ALL=${LANG}
 
 # Configure apt sources so we can use multiverse section from repo
