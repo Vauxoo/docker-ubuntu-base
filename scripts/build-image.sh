@@ -89,6 +89,8 @@ apt-get install ${DPKG_DEPENDS} ${PIP_DPKG_BUILD_DEPENDS}
 # Get pip from upstream because is lighter
 py_download_execute https://bootstrap.pypa.io/get-pip.py
 
+# Let's keep this version ultil the bugs get fixed
+pip install --upgrade pip==8.1.1
 # Install python dependencies
 pip install ${PIP_OPTS} ${PIP_DEPENDS}
 
