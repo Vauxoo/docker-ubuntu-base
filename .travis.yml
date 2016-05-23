@@ -8,10 +8,10 @@ install:
 # TODO: Check git diff changes to build just required image.
 script:
   - for dfile in `find $TRAVIS_BUILD_DIR -name 'Dockerfile' -not -path "./.git/*"`; do echo " ===== [ CHECKING $dfile ] ===== "; dockerlint $dfile; if [ $? -ne 0 ]; then echo " ----- [ FINISHED IN ERROR ] ----- "; fi; echo ""; done
-  - git clone https://github.com/vauxoo-dev/docker-odoo-image.git -b master-102-ref-shrink-image-dev-luisalejandro ${TRAVIS_BUILD_DIR}/docker-odoo-image
-  - docker build --rm -t vauxoo/docker-ubuntu-base:latest .
-  - docker build --rm -t vauxoo/odoo-80-image:latest ${TRAVIS_BUILD_DIR}/docker-odoo-image/odoo80
-  - docker build --rm -t vauxoo/odoo-80-image-shippable.auto:latest ${TRAVIS_BUILD_DIR}/docker-odoo-image/odoo-shippable
+  - git clone https://github.com/vauxoo/docker-odoo-image.git ${TRAVIS_BUILD_DIR}/docker-odoo-image
+  - cd ${TRAVIS_BUILD_DIR} && docker build --rm -t vauxoo/docker-ubuntu-base:latest .
+  - cd ${TRAVIS_BUILD_DIR}/docker-odoo-image/odoo80 && docker build --rm -t vauxoo/odoo-80-image:latest .
+  - cd ${TRAVIS_BUILD_DIR}/docker-odoo-image/odoo-shippable && docker build --rm -t vauxoo/odoo-80-image-shippable-auto:latest .
 
 # TODO: Add docker push
 #after_success:
