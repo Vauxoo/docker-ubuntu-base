@@ -12,6 +12,7 @@ PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 TRUSTY_REPO="deb http://archive.ubuntu.com/ubuntu/ trusty main universe multiverse"
 TRUSTY_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ trusty-updates main universe multiverse"
 TRUSTY_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ trusty-security main universe multiverse"
+DPKG_PRE_DEPENDS="wget ca-certificates"
 DPKG_DEPENDS="bzr \
               git \
               mercurial \
@@ -78,6 +79,11 @@ update-locale LANG=${LANG} LANGUAGE=${LANG} LC_ALL=${LANG}
 
 # Configure apt sources so we can use multiverse section from repo
 conf_aptsources "${TRUSTY_REPO}" "${TRUSTY_UPDATES_REPO}" "${TRUSTY_SECURITY_REPO}"
+
+# Upgrade system and install some pre-dependencies
+apt-get update
+apt-get upgrade
+apt-get install ${DPKG_PRE_DEPENDS}
 
 # This will put postgres's upstream repo for us to install a newer
 # postgres because our image is so old
