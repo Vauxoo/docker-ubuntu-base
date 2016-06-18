@@ -24,7 +24,6 @@ DPKG_DEPENDS="bzr \
               locate \
               lsof \
               multitail \
-              supervisor \
               tmux \
               unzip \
               vim \
@@ -47,7 +46,8 @@ PIP_DEPENDS="pyopenssl \
              PyGithub \
              merge-requirements \
              pip-tools \
-             click"
+             click \
+             supervisor"
 PIP_DPKG_BUILD_DEPENDS="libpq-dev \
                         python-dev \
                         libffi-dev \
