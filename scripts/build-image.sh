@@ -12,6 +12,8 @@ PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 TRUSTY_REPO="deb http://archive.ubuntu.com/ubuntu/ trusty main universe multiverse"
 TRUSTY_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ trusty-updates main universe multiverse"
 TRUSTY_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ trusty-security main universe multiverse"
+PYTHON_PPA_REPO="deb http://ppa.launchpad.net/fkrull/deadsnakes-python2.7/ubuntu trusty main"
+PYTHON_PPA_KEY="http://keyserver.ubuntu.com:11371/pks/lookup?op=get&search=0xFF3997E83CD969B409FB24BC5BB92C09DB82666C"
 DPKG_PRE_DEPENDS="wget ca-certificates"
 DPKG_DEPENDS="bzr \
               git \
@@ -88,6 +90,9 @@ apt-get install ${DPKG_PRE_DEPENDS}
 # This will put postgres's upstream repo for us to install a newer
 # postgres because our image is so old
 add_custom_aptsource "${PSQL_UPSTREAM_REPO}" "${PSQL_UPSTREAM_KEY}"
+
+# Add python repo so we can use the latest 2.7 version
+add_custom_aptsource "${PYTHON_PPA_REPO}" "${PYTHON_PPA_KEY}"
 
 # Release the apt monster!
 apt-get update
