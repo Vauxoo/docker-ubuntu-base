@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER Tulio Ruiz <tulio@vauxoo.com>
 
 RUN locale-gen "en_US.UTF-8" "fr_FR.UTF-8" "es_MX.UTF-8" \

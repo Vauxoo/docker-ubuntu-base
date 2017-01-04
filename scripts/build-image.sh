@@ -7,13 +7,11 @@ set -e
 . /usr/share/vx-docker-internal/ubuntu-base/library.sh
 
 # Let's set some defaults here
-PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
+PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
 PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
-TRUSTY_REPO="deb http://archive.ubuntu.com/ubuntu/ trusty main universe multiverse"
-TRUSTY_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ trusty-updates main universe multiverse"
-TRUSTY_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ trusty-security main universe multiverse"
-PYTHON_PPA_REPO="deb http://ppa.launchpad.net/fkrull/deadsnakes-python2.7/ubuntu trusty main"
-PYTHON_PPA_KEY="http://keyserver.ubuntu.com:11371/pks/lookup?op=get&search=0xFF3997E83CD969B409FB24BC5BB92C09DB82666C"
+XENIAL_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial main universe multiverse"
+XENIAL_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial-updates main universe multiverse"
+XENIAL_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial-security main universe multiverse"
 DPKG_PRE_DEPENDS="wget ca-certificates"
 DPKG_DEPENDS="bzr \
               git \
@@ -53,6 +51,7 @@ PIP_DEPENDS="pyopenssl \
 PIP_DPKG_BUILD_DEPENDS="libpq-dev \
                         python-dev \
                         libffi-dev \
+                        libssl-dev \
                         gcc"
 
 # Dpkg, please always install configurations from upstream, be fast
@@ -80,7 +79,7 @@ PIP_DPKG_BUILD_DEPENDS="libpq-dev \
 update-locale LANG=${LANG} LANGUAGE=${LANG} LC_ALL=${LANG}
 
 # Configure apt sources so we can use multiverse section from repo
-conf_aptsources "${TRUSTY_REPO}" "${TRUSTY_UPDATES_REPO}" "${TRUSTY_SECURITY_REPO}"
+conf_aptsources "${XENIAL_REPO}" "${XENIAL_UPDATES_REPO}" "${XENIAL_SECURITY_REPO}"
 
 # Upgrade system and install some pre-dependencies
 apt-get update
@@ -91,9 +90,6 @@ apt-get install ${DPKG_PRE_DEPENDS}
 # postgres because our image is so old
 add_custom_aptsource "${PSQL_UPSTREAM_REPO}" "${PSQL_UPSTREAM_KEY}"
 
-# Add python repo so we can use the latest 2.7 version
-add_custom_aptsource "${PYTHON_PPA_REPO}" "${PYTHON_PPA_KEY}"
-
 # Release the apt monster!
 apt-get update
 apt-get upgrade
@@ -102,8 +98,6 @@ apt-get install ${DPKG_DEPENDS} ${PIP_DPKG_BUILD_DEPENDS}
 # Get pip from upstream because is lighter
 py_download_execute https://bootstrap.pypa.io/get-pip.py
 
-# Let's keep this version ultil the bugs get fixed
-pip install --upgrade pip==8.1.1
 # Install python dependencies
 pip install ${PIP_OPTS} ${PIP_DEPENDS}
 
