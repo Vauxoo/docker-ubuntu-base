@@ -7,8 +7,6 @@ set -e
 . /usr/share/vx-docker-internal/ubuntu-base/library.sh
 
 # Let's set some defaults here
-PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
-PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 XENIAL_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial main universe multiverse"
 XENIAL_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial-updates main universe multiverse"
 XENIAL_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial-security main universe multiverse"
@@ -85,10 +83,6 @@ conf_aptsources "${XENIAL_REPO}" "${XENIAL_UPDATES_REPO}" "${XENIAL_SECURITY_REP
 apt-get update
 apt-get upgrade
 apt-get install ${DPKG_PRE_DEPENDS}
-
-# This will put postgres's upstream repo for us to install a newer
-# postgres because our image is so old
-add_custom_aptsource "${PSQL_UPSTREAM_REPO}" "${PSQL_UPSTREAM_KEY}"
 
 # Release the apt monster!
 apt-get update
