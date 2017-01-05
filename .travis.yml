@@ -8,7 +8,7 @@ install:
 # TODO: Check git diff changes to build just required image.
 script:
   - for dfile in `find $TRAVIS_BUILD_DIR -name 'Dockerfile' -not -path "./.git/*"`; do echo " ===== [ CHECKING $dfile ] ===== "; dockerlint $dfile; if [ $? -ne 0 ]; then echo " ----- [ FINISHED IN ERROR ] ----- "; fi; echo ""; done
-  - git clone -b master-add_odoo10-truiz https://github.com/vauxoo-dev/docker-odoo-image.git ${TRAVIS_BUILD_DIR}/docker-odoo-image
+  - git clone -b https://github.com/vauxoo-dev/docker-odoo-image.git ${TRAVIS_BUILD_DIR}/docker-odoo-image
   - cd ${TRAVIS_BUILD_DIR} && docker build --rm -t vauxoo/docker-ubuntu-base:16.04 .
   - cd ${TRAVIS_BUILD_DIR}/docker-odoo-image/odoo100 && docker build --rm -t vauxoo/odoo-100-image:latest .
 
