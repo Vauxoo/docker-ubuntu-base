@@ -53,6 +53,7 @@ PIP_DEPENDS="pyopenssl \
 PIP_DPKG_BUILD_DEPENDS="libpq-dev \
                         python-dev \
                         libffi-dev \
+                        libssl-dev \
                         gcc"
 
 # Dpkg, please always install configurations from upstream, be fast
