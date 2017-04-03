@@ -105,3 +105,24 @@ find /var/tmp -type f -print0 | xargs -0r rm -rf
 find /var/log -type f -print0 | xargs -0r rm -rf
 find /var/lib/apt/lists -type f -print0 | xargs -0r rm -rf
 find /usr/local/lib/python2.7/dist-packages/github/tests -type f -print0 | xargs -0r rm -rf
+
+cat >> /etc/postgresql-common/common-vauxoo.conf << EOF
+listen_addresses = '*'
+temp_buffers = 16MB
+work_mem = 16MB
+max_stack_depth = 7680kB
+bgwriter_delay = 500ms
+fsync=off
+full_page_writes=off
+checkpoint_timeout=45min
+synchronous_commit=off
+autovacuum = off
+logging_collector=on
+log_destination='stderr'
+log_directory='pg_log'
+log_filename='postgresql.log'
+log_rotation_age=0
+log_checkpoints=on
+log_hostname=on
+log_line_prefix='%t [%p]: [%l-1] db=%d,user=%u'
+EOF
