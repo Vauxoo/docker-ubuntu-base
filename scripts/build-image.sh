@@ -10,6 +10,8 @@ set -e
 XENIAL_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial main universe multiverse"
 XENIAL_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial-updates main universe multiverse"
 XENIAL_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial-security main universe multiverse"
+PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
+PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 DPKG_PRE_DEPENDS="wget ca-certificates"
 DPKG_DEPENDS="bzr \
               git \
@@ -83,6 +85,9 @@ conf_aptsources "${XENIAL_REPO}" "${XENIAL_UPDATES_REPO}" "${XENIAL_SECURITY_REP
 apt-get update
 apt-get upgrade
 apt-get install ${DPKG_PRE_DEPENDS}
+
+# Add repository postgresql 9.6
+add_custom_aptsource "${PSQL_UPSTREAM_REPO}" "${PSQL_UPSTREAM_KEY}"
 
 # Release the apt monster!
 apt-get update
