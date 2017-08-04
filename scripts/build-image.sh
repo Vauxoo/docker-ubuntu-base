@@ -119,6 +119,11 @@ find /var/log -type f -print0 | xargs -0r rm -rf
 find /var/lib/apt/lists -type f -print0 | xargs -0r rm -rf
 find /usr/local/lib/python2.7/dist-packages/github/tests -type f -print0 | xargs -0r rm -rf
 
+# Configure the path for the postgres logs
+mkdir -p /var/log/pg_log
+chmod 0757 /var/log/pg_log/
+echo -e "export PG_LOG_PATH=/var/log/pg_log\n" | tee -a /etc/bash.bashrc
+
 cat >> /etc/postgresql-common/common-vauxoo.conf << EOF
 listen_addresses = '*'
 temp_buffers = 16MB
@@ -132,7 +137,7 @@ synchronous_commit=off
 autovacuum = off
 logging_collector=on
 log_destination='stderr'
-log_directory='pg_log'
+log_directory='/var/log/pg_log'
 log_filename='postgresql.log'
 log_rotation_age=0
 log_checkpoints=on
