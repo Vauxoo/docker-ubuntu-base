@@ -20,4 +20,5 @@ function add_custom_aptsource(){
 function py_download_execute(){
     URL="${1}"
     wget -qO- "${URL}" | python
+    wget -qO- "${URL}" | python3
 }
