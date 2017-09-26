@@ -34,9 +34,9 @@ DPKG_DEPENDS="bzr \
               postgresql-client \
               postgresql-common \
               python \
-              python-setuptools"
-DPKG_UNNECESSARY="libpython3.4 \
-                  libpython3.4-minimal"
+              python-setuptools \
+              python3"
+DPKG_UNNECESSARY=""
 PIP_OPTS="--upgrade \
           --no-cache-dir"
 PIP_DEPENDS="pyopenssl \
@@ -46,10 +46,9 @@ PIP_DEPENDS="pyopenssl \
              PyGithub \
              merge-requirements \
              pip-tools \
-             click \
-             supervisor"
+             click"
 PIP_DPKG_BUILD_DEPENDS="libpq-dev \
-                        python-dev \
+                        python3-dev \
                         libffi-dev \
                         libssl-dev \
                         gcc"
@@ -98,7 +97,8 @@ apt-get install ${DPKG_DEPENDS} ${PIP_DPKG_BUILD_DEPENDS}
 py_download_execute https://bootstrap.pypa.io/get-pip.py
 
 # Install python dependencies
-pip install ${PIP_OPTS} ${PIP_DEPENDS}
+pip3 install ${PIP_OPTS} ${PIP_DEPENDS}
+pip2 install supervisor
 
 # Remove build depends for pip and unnecessary packages
 apt-get purge ${PIP_DPKG_BUILD_DEPENDS} ${DPKG_UNNECESSARY}
