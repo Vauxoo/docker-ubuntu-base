@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 MAINTAINER Tulio Ruiz <tulio@vauxoo.com>
 
 RUN apt-get update \
-    && apt-get install locales language-pack-es \
+    && apt-get install locales language-pack-es -y \
     && locale-gen "en_US.UTF-8" "fr_FR.UTF-8" "es_MX.UTF-8" \
     "es_PA.UTF-8" "es_VE.UTF-8" "es_GT.UTF-8" "es_PE.UTF-8" \
     "es_ES.UTF-8"
