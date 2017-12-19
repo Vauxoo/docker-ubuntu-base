@@ -122,7 +122,7 @@ find /usr/local/lib/python2.7/dist-packages/github/tests -type f -print0 | xargs
 # Configure the path for the postgres logs
 mkdir -p /var/log/pg_log
 chmod 0757 /var/log/pg_log/
-echo -e "export PG_LOG_PATH=/var/log/pg_log\n" | tee -a /etc/bash.bashrc
+echo -e "export PG_LOG_PATH=/var/log/pg_log/postgresql.log\n" | tee -a /etc/bash.bashrc
 
 cat >> /etc/postgresql-common/common-vauxoo.conf << EOF
 listen_addresses = '*'
