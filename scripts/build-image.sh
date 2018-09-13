@@ -1,25 +1,24 @@
 #!/usr/bin/env sh
 
-# Exit inmediately if a command fails
+# Exit immediately if a command fails
 set -e
 
 # With a little help from my friends
 . /usr/share/vx-docker-internal/ubuntu-base/library.sh
 
 # Let's set some defaults here
-XENIAL_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial main universe multiverse"
-XENIAL_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial-updates main universe multiverse"
-XENIAL_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial-security main universe multiverse"
-PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
+BIONIC_REPO="deb http://archive.ubuntu.com/ubuntu/ bionic main universe multiverse"
+BIONIC_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ bionic-updates main universe multiverse"
+BIONIC_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ bionic-security main universe multiverse"
+PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main"
 PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
-DPKG_PRE_DEPENDS="wget ca-certificates"
+DPKG_PRE_DEPENDS="wget ca-certificates gnupg2"
 DPKG_DEPENDS="bzr \
               git \
               mercurial \
               bash-completion \
               apt-transport-https \
               curl \
-              wget \
               htop \
               locate \
               lsof \
@@ -34,7 +33,10 @@ DPKG_DEPENDS="bzr \
               postgresql-client \
               postgresql-common \
               python \
-              python-setuptools"
+              python3 \
+              python3-distutils \
+              python-setuptools \
+              supervisor"
 DPKG_UNNECESSARY="libpython3.4 \
                   libpython3.4-minimal"
 PIP_OPTS="--upgrade \
@@ -46,8 +48,7 @@ PIP_DEPENDS="pyopenssl \
              PyGithub \
              merge-requirements \
              pip-tools \
-             click \
-             supervisor"
+             click"
 PIP_DPKG_BUILD_DEPENDS="libpq-dev \
                         python-dev \
                         libffi-dev \
@@ -79,7 +80,7 @@ PIP_DPKG_BUILD_DEPENDS="libpq-dev \
 update-locale LANG=${LANG} LANGUAGE=${LANG} LC_ALL=${LANG}
 
 # Configure apt sources so we can use multiverse section from repo
-conf_aptsources "${XENIAL_REPO}" "${XENIAL_UPDATES_REPO}" "${XENIAL_SECURITY_REPO}"
+conf_aptsources "${BIONIC_REPO}" "${BIONIC_UPDATES_REPO}" "${BIONIC_SECURITY_REPO}"
 
 # Upgrade system and install some pre-dependencies
 apt-get update
