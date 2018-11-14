@@ -15,7 +15,6 @@ PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 DPKG_PRE_DEPENDS="wget ca-certificates"
 DPKG_DEPENDS="bzr \
               git \
-              mercurial \
               bash-completion \
               apt-transport-https \
               curl \
@@ -47,7 +46,8 @@ PIP_DEPENDS="pyopenssl \
              merge-requirements \
              pip-tools \
              click \
-             supervisor"
+             supervisor \
+             mercurial"
 PIP_DPKG_BUILD_DEPENDS="libpq-dev \
                         python-dev \
                         libffi-dev \
