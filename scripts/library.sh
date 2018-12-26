@@ -22,3 +22,13 @@ function py_download_execute(){
     wget -qO- "${URL}" | python
     wget -qO- "${URL}" | python3
 }
+
+# Helper function to install GeoLite2
+function geoip_install(){
+    URL="${1}"
+    DIR="$( mktemp -d )"
+    wget -qO- "${URL}" | tar -xz -C "${DIR}/"
+    mkdir -p /usr/share/GeoIP/
+    mv "$(find ${DIR} -name "GeoLite2-City.mmdb")" "/usr/share/GeoIP/GeoLite2-City.mmdb"
+    rm -rf "${DIR}"
+}
