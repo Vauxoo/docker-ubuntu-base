@@ -12,6 +12,7 @@ BIONIC_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ bionic-updates main u
 BIONIC_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ bionic-security main universe multiverse"
 PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main"
 PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+GEOIP_DB_URL="http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz"
 DPKG_PRE_DEPENDS="wget ca-certificates gnupg2"
 DPKG_DEPENDS="bzr \
               git \
@@ -104,6 +105,9 @@ pip install ${PIP_OPTS} ${PIP_DEPENDS}
 # Remove build depends for pip and unnecessary packages
 apt-get purge ${PIP_DPKG_BUILD_DEPENDS} ${DPKG_UNNECESSARY}
 apt-get autoremove
+
+# Install GeoIP database
+geoip_install "${GEOIP_DB_URL}"
 
 # Final cleaning
 find /tmp -type f -print0 | xargs -0r rm -rf
