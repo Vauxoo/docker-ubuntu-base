@@ -16,7 +16,6 @@ GEOIP_DB_URL="http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.t
 DPKG_PRE_DEPENDS="wget ca-certificates gnupg2"
 DPKG_DEPENDS="bzr \
               git \
-              mercurial \
               bash-completion \
               apt-transport-https \
               curl \
@@ -101,6 +100,9 @@ py_download_execute https://bootstrap.pypa.io/get-pip.py
 
 # Install python dependencies
 pip install ${PIP_OPTS} ${PIP_DEPENDS}
+
+# Install mercurial, used to install some packages using hg protocol
+pip2 install mercurial
 
 # Remove build depends for pip and unnecessary packages
 apt-get purge ${PIP_DPKG_BUILD_DEPENDS} ${DPKG_UNNECESSARY}
