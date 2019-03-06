@@ -141,5 +141,5 @@ log_filename='postgresql.log'
 log_rotation_age=0
 log_checkpoints=on
 log_hostname=on
-log_line_prefix='%t [%p]: [%l-1] db=%d,user=%u'
+log_line_prefix='%t [%p]: [%l-1] db=%d,user=%u '
 EOF
