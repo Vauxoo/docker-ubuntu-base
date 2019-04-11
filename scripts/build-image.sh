@@ -11,6 +11,8 @@ BIONIC_REPO="deb http://archive.ubuntu.com/ubuntu/ bionic main universe multiver
 BIONIC_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ bionic-updates main universe multiverse"
 BIONIC_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ bionic-security main universe multiverse"
 PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main"
+JAVA_UPSTREAM_REPO="deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu bionic main"
+JAVA_UPSTREAM_KEY="http://keyserver.ubuntu.com/pks/lookup?search=0xda1a4a13543b466853baf164eb9b1d8886f44e2a&op=get"
 PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 GEOIP_DB_URL="http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz"
 DPKG_PRE_DEPENDS="wget ca-certificates gnupg2"
@@ -43,7 +45,7 @@ DPKG_UNNECESSARY="libpython3.4 \
 PIP_OPTS="--upgrade \
           --no-cache-dir"
 PIP_DEPENDS="pyopenssl \
-             psycopg2 \
+             psycopg2-binary \
              ndg-httpsclient \
              pyasn1 \
              PyGithub \
@@ -90,6 +92,9 @@ apt-get install ${DPKG_PRE_DEPENDS}
 
 # Add repository postgresql 9.6
 add_custom_aptsource "${PSQL_UPSTREAM_REPO}" "${PSQL_UPSTREAM_KEY}"
+
+# Add repository openjdk
+add_custom_aptsource "${JAVA_UPSTREAM_REPO}" "${JAVA_UPSTREAM_KEY}"
 
 # Release the apt monster!
 apt-get update
