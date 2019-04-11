@@ -11,6 +11,8 @@ XENIAL_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial main universe multiver
 XENIAL_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial-updates main universe multiverse"
 XENIAL_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ xenial-security main universe multiverse"
 PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
+JAVA_UPSTREAM_REPO="deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu xenial main"
+JAVA_UPSTREAM_KEY="http://keyserver.ubuntu.com/pks/lookup?search=0xda1a4a13543b466853baf164eb9b1d8886f44e2a&op=get"
 PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 DPKG_PRE_DEPENDS="wget ca-certificates"
 DPKG_DEPENDS="bzr \
@@ -87,6 +89,9 @@ apt-get install ${DPKG_PRE_DEPENDS}
 
 # Add repository postgresql 9.6
 add_custom_aptsource "${PSQL_UPSTREAM_REPO}" "${PSQL_UPSTREAM_KEY}"
+
+# Add repository java
+add_custom_aptsource "${JAVA_UPSTREAM_REPO}" "${JAVA_UPSTREAM_KEY}"
 
 # Release the apt monster!
 apt-get update
