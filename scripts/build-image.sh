@@ -14,6 +14,7 @@ PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg mai
 JAVA_UPSTREAM_REPO="deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu xenial main"
 JAVA_UPSTREAM_KEY="http://keyserver.ubuntu.com/pks/lookup?search=0xda1a4a13543b466853baf164eb9b1d8886f44e2a&op=get"
 PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+RESTIC_URL="https://github.com/restic/restic/releases/download/v0.9.5/restic_0.9.5_linux_amd64.bz2"
 DPKG_PRE_DEPENDS="wget ca-certificates"
 DPKG_DEPENDS="bzr \
               git \
@@ -37,7 +38,8 @@ DPKG_DEPENDS="bzr \
               postgresql-common \
               python \
               python-setuptools \
-              python3"
+              python3 \
+              bzip2"
 DPKG_UNNECESSARY=""
 PIP_OPTS="--upgrade \
           --no-cache-dir"
@@ -100,6 +102,9 @@ apt-get install ${DPKG_DEPENDS} ${PIP_DPKG_BUILD_DEPENDS}
 
 # Get pip from upstream because is lighter
 py_download_execute https://bootstrap.pypa.io/get-pip.py
+
+# Install restic
+install_restic ${RESTIC_URL}
 
 # Install python dependencies
 pip3 install ${PIP_OPTS} ${PIP_DEPENDS}
