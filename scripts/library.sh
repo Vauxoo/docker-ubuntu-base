@@ -22,3 +22,11 @@ function py_download_execute(){
     wget -qO- "${URL}" | python
     wget -qO- "${URL}" | python3
 }
+
+function install_restic(){
+    URL="${1}"
+    DIR="$( mktemp -d )"
+    wget -q "${URL}" -O "${DIR}/restic.bz2"
+    bunzip2 "${DIR}/restic.bz2"
+    mv "${DIR}/restic" /usr/bin && chmod +x /usr/bin/restic
+}
