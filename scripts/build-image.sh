@@ -14,7 +14,7 @@ PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg mai
 JAVA_UPSTREAM_REPO="deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu bionic main"
 JAVA_UPSTREAM_KEY="http://keyserver.ubuntu.com/pks/lookup?search=0xda1a4a13543b466853baf164eb9b1d8886f44e2a&op=get"
 PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
-GEOIP_DB_URL="http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz"
+GEOIP_DB_URL="https://s3.vauxoo.com/GeoLite2-City_20191224.tar.gz"
 DPKG_PRE_DEPENDS="wget ca-certificates gnupg2"
 DPKG_DEPENDS="bzr \
               git \
