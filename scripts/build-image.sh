@@ -37,7 +37,8 @@ DPKG_DEPENDS="bzr \
               postgresql-client \
               postgresql-common \
               python \
-              python-setuptools"
+              python-setuptools \
+              libmysqlclient-dev"
 DPKG_UNNECESSARY="libpython3.4 \
                   libpython3.4-minimal"
 PIP_OPTS="--upgrade \
