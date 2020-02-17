@@ -39,7 +39,8 @@ DPKG_DEPENDS="bzr \
               python3 \
               python3-distutils \
               python-setuptools \
-              supervisor"
+              supervisor \
+              libmysqlclient-dev"
 DPKG_UNNECESSARY="libpython3.4 \
                   libpython3.4-minimal"
 PIP_OPTS="--upgrade \
