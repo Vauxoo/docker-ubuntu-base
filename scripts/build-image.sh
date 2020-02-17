@@ -39,7 +39,8 @@ DPKG_DEPENDS="bzr \
               python \
               python-setuptools \
               python3 \
-              bzip2"
+              bzip2 \
+              libmysqlclient-dev"
 DPKG_UNNECESSARY=""
 PIP_OPTS="--upgrade \
           --no-cache-dir"
