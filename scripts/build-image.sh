@@ -108,7 +108,6 @@ pip install ${PIP_OPTS} ${PIP_DEPENDS}
 
 # Remove build depends for pip and unnecessary packages
 apt-get purge ${PIP_DPKG_BUILD_DEPENDS} ${DPKG_UNNECESSARY}
-apt-get autoremove
 
 # Final cleaning
 find /tmp -type f -print0 | xargs -0r rm -rf
