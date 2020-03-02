@@ -54,7 +54,7 @@ PIP_DEPENDS="pyopenssl \
              pip-tools \
              click"
 PIP_DPKG_BUILD_DEPENDS="libpq-dev \
-                        python-dev \
+                        python3-dev \
                         libffi-dev \
                         libssl-dev \
                         gcc"
@@ -109,7 +109,7 @@ py_download_execute https://bootstrap.pypa.io/get-pip.py
 pip install ${PIP_OPTS} ${PIP_DEPENDS}
 
 # Remove build depends for pip and unnecessary packages
-apt-get purge ${PIP_DPKG_BUILD_DEPENDS} ${DPKG_UNNECESSARY}
+apt-get purge ${DPKG_UNNECESSARY}
 
 # Install GeoIP database
 geoip_install "${GEOIP_DB_URL}"
