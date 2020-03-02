@@ -7,11 +7,11 @@ set -e
 . /usr/share/vx-docker-internal/ubuntu-base/library.sh
 
 # Let's set some defaults here
-BIONIC_REPO="deb http://archive.ubuntu.com/ubuntu/ bionic main universe multiverse"
-BIONIC_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ bionic-updates main universe multiverse"
-BIONIC_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ bionic-security main universe multiverse"
-PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main"
-JAVA_UPSTREAM_REPO="deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu bionic main"
+BIONIC_REPO="deb http://archive.ubuntu.com/ubuntu/ focal main universe multiverse"
+BIONIC_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ focal-updates main universe multiverse"
+BIONIC_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ focal-security main universe multiverse"
+PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main"
+#JAVA_UPSTREAM_REPO="deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu focal main"
 JAVA_UPSTREAM_KEY="http://keyserver.ubuntu.com/pks/lookup?search=0xda1a4a13543b466853baf164eb9b1d8886f44e2a&op=get"
 PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 GEOIP_DB_URL="https://s3.vauxoo.com/GeoLite2-City_20191224.tar.gz"
@@ -35,14 +35,12 @@ DPKG_DEPENDS="bzr \
               openssh-client \
               postgresql-client \
               postgresql-common \
-              python \
               python3 \
               python3-distutils \
               python-setuptools \
               supervisor \
               libmysqlclient-dev"
-DPKG_UNNECESSARY="libpython3.4 \
-                  libpython3.4-minimal"
+DPKG_UNNECESSARY=""
 PIP_OPTS="--upgrade \
           --no-cache-dir"
 PIP_DEPENDS="pyopenssl \
@@ -54,7 +52,7 @@ PIP_DEPENDS="pyopenssl \
              pip-tools \
              click"
 PIP_DPKG_BUILD_DEPENDS="libpq-dev \
-                        python-dev \
+                        python3-dev \
                         libffi-dev \
                         libssl-dev \
                         gcc"
@@ -95,7 +93,7 @@ apt-get install ${DPKG_PRE_DEPENDS}
 add_custom_aptsource "${PSQL_UPSTREAM_REPO}" "${PSQL_UPSTREAM_KEY}"
 
 # Add repository openjdk
-add_custom_aptsource "${JAVA_UPSTREAM_REPO}" "${JAVA_UPSTREAM_KEY}"
+#add_custom_aptsource "${JAVA_UPSTREAM_REPO}" "${JAVA_UPSTREAM_KEY}"
 
 # Release the apt monster!
 apt-get update

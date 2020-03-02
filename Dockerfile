@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 MAINTAINER Tulio Ruiz <tulio@vauxoo.com>
 
 RUN apt-get update \
