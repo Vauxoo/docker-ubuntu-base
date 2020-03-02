@@ -9,8 +9,8 @@ install:
 script:
   - for dfile in `find $TRAVIS_BUILD_DIR -name 'Dockerfile' -not -path "./.git/*"`; do echo " ===== [ CHECKING $dfile ] ===== "; dockerlint $dfile; if [ $? -ne 0 ]; then echo " ----- [ FINISHED IN ERROR ] ----- "; fi; echo ""; done
   - git clone https://github.com/vauxoo/docker-odoo-image.git ${TRAVIS_BUILD_DIR}/docker-odoo-image
-  - cd ${TRAVIS_BUILD_DIR} && docker build --rm -t vauxoo/docker-ubuntu-base:18.04 .
-  - cd ${TRAVIS_BUILD_DIR}/docker-odoo-image/odoo120 && docker build --rm -t vauxoo/odoo-120-image:latest .
+  - cd ${TRAVIS_BUILD_DIR} && docker build --rm -t vauxoo/docker-ubuntu-base:20.04 .
+#  - cd ${TRAVIS_BUILD_DIR}/docker-odoo-image/odoo120 && docker build --rm -t vauxoo/odoo-120-image:latest .
 
 # TODO: Add docker push
 #after_success:
