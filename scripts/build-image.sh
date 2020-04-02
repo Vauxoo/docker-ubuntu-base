@@ -51,7 +51,8 @@ PIP_DEPENDS="pyopenssl \
              PyGithub \
              merge-requirements \
              pip-tools \
-             click"
+             click \
+             click-odoo-contrib"
 PIP_DPKG_BUILD_DEPENDS="libpq-dev \
                         python3-dev \
                         libffi-dev \
