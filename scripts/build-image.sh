@@ -50,7 +50,8 @@ PIP_DEPENDS="pyopenssl \
              pip-tools \
              click \
              supervisor \
-             mercurial"
+             mercurial \
+             click-odoo-contrib"
 PIP_DPKG_BUILD_DEPENDS="libpq-dev \
                         python-dev \
                         libffi-dev \
