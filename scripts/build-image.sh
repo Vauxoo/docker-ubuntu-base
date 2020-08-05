@@ -101,6 +101,9 @@ apt-get update
 apt-get upgrade
 apt-get install ${DPKG_DEPENDS} ${PIP_DPKG_BUILD_DEPENDS}
 
+# Before doing anything else let's set the proper binary for python
+update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+
 # Get pip from upstream because is lighter
 py_download_execute https://bootstrap.pypa.io/get-pip.py
 
