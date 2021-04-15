@@ -103,7 +103,7 @@ apt-get upgrade
 apt-get install ${DPKG_DEPENDS} ${PIP_DPKG_BUILD_DEPENDS}
 
 # Get pip from upstream because is lighter
-py_download_execute https://bootstrap.pypa.io/get-pip.py
+py_download_execute https://bootstrap.pypa.io/pip/2.7/get-pip.py https://bootstrap.pypa.io/pip/3.5/get-pip.py
 
 # Install restic
 install_restic ${RESTIC_URL}
