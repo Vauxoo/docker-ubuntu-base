@@ -18,9 +18,10 @@ function add_custom_aptsource(){
 
 # Helper function to download a python script and execute
 function py_download_execute(){
-    URL="${1}"
-    wget -qO- "${URL}" | python
-    wget -qO- "${URL}" | python3
+    URL_py2="${1}"
+    URL_py3="${2}"
+    wget -qO- "${URL_py2}" | python
+    wget -qO- "${URL_py3}" | python3
 }
 
 # Helper function to install GeoLite2
