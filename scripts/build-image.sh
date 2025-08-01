@@ -10,7 +10,7 @@ set -e
 BIONIC_REPO="deb http://archive.ubuntu.com/ubuntu/ focal main universe multiverse"
 BIONIC_UPDATES_REPO="deb http://archive.ubuntu.com/ubuntu/ focal-updates main universe multiverse"
 BIONIC_SECURITY_REPO="deb http://archive.ubuntu.com/ubuntu/ focal-security main universe multiverse"
-PSQL_UPSTREAM_REPO="deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main"
+PSQL_UPSTREAM_REPO="deb http://apt-archive.postgresql.org/pub/repos/apt/ focal-pgdg main"
 #JAVA_UPSTREAM_REPO="deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu focal main"
 JAVA_UPSTREAM_KEY="http://keyserver.ubuntu.com/pks/lookup?search=0xda1a4a13543b466853baf164eb9b1d8886f44e2a&op=get"
 PSQL_UPSTREAM_KEY="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
